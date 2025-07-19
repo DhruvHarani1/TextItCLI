@@ -16,7 +16,7 @@ public class SessionManger {
 
     }
 
-    public void autoLogin(){
+   static public void autoLogin(){
         File file = new File("last_session.txt");
         if (file.exists()) {
             // Do auto Login()
