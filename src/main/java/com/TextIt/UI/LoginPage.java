@@ -2,6 +2,7 @@ package com.TextIt.UI;
 
 import com.TextIt.database.DataBase;
 import com.TextIt.service.pages.LoginAuth;
+import com.TextIt.service.session.SessionManger;
 
 import java.util.Scanner;
 
@@ -18,9 +19,11 @@ public class LoginPage {
     private static final LoginAuth oldUser = new LoginAuth();
     private static final Scanner scanner = new Scanner(System.in);
     private static final DataBase connectivity = new DataBase();
+    private static final SessionManger sessionManger = new SessionManger();
 
 
     public static void main(String[] args) {
+
         System.out.println(BLUE + BOLD + """
                 ╔════════════════════════════════════════╗
                 ║                LoginAuth               ║
@@ -44,6 +47,9 @@ public class LoginPage {
             try {
                 if (oldUser.verifyUserDetail(userInput) && oldUser.verifyPassword(password)) {
                     System.out.println(GREEN + BOLD + "\n LoginAuth successful!" + RESET);
+                    sessionManger.manualLogin(connectivity.featchId(userInput));
+
+
                 } else {
                     System.out.println(RED + BOLD + "\n LoginAuth failed. Please check your credentials." + RESET);
                 }

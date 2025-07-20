@@ -20,7 +20,7 @@ public class SessionManger {
     public SessionManger() {
     }
 
-    public void autoLogin(){
+    public boolean autoLogin(){
         File file = new File("last_session.txt");
         if (file.exists()) {
             // Do auto Login()
@@ -32,12 +32,13 @@ public class SessionManger {
             }
             try(BufferedReader br = new BufferedReader(fr)){
                 userData = dataBase.getUserData(Integer.parseInt(br.readLine()));
-                openInNewCMD("com.TextIt.UI.LoginPage");
+                return true;
             }catch (Exception e){
                 System.out.println(e.getMessage());
             }
 
         }
+        return false;
     }
 
 
@@ -47,7 +48,9 @@ public class SessionManger {
             File file = new File("last_session.txt");
             if(file.createNewFile()){
                 BufferedWriter bw = new BufferedWriter(new FileWriter("last_session.txt"));
-                bw.write(user_id);
+                bw.write(String.valueOf(user_id));
+                bw.flush();
+                bw.close();
             }else{
                 System.out.println("File already exists");
             }

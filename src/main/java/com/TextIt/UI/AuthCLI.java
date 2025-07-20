@@ -84,7 +84,11 @@ public class AuthCLI {
     public void showWelcomeScreen() throws SQLException {
 
         while (true) {
-            sessionManger.autoLogin();
+            if(sessionManger.autoLogin()){
+                // homePage
+                HomePage.main(null);
+                break;
+            }
             System.out.println(CommonMethods.CYAN + CommonMethods.BOLD + """
                     ╔════════════════════════════════════════╗
                     ║           Welcome to TextIt            ║

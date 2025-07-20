@@ -88,7 +88,7 @@ public class DataBase {
          * @param input the value to check for uniqueness
          * @return true if the input is available (not taken), false if it already exists
          */
-        public boolean isAvailable(String field, String input) {
+        public  boolean isAvailable(String field, String input) {
             String query = "SELECT user_id FROM users WHERE " + field + " = ?";
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
 
@@ -104,20 +104,13 @@ public class DataBase {
             }
         }
 
-        public boolean isServerReachable() {
-            try (Connection _ = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-                return true;
-            } catch (SQLException e) {
-                System.out.println("⚠️ Unable to connect to the server. Please check your internet connection or try again later.");
-                return false;
-            }
-        }
+
 
         public boolean registerUser(String firstName, String lastName, String username, String password, String mobileNumber, String email) {
             String hashedPassword = Hashing.generateHashCode(password); // Hash the password
             LocalDate currentDate = LocalDate.now();                    // Account creation date
 
-            String query = "INSERT INTO users (first_name, last_name, username, password_hash, mobile_number, email, created_at) " + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO users (first_name, last_name, LOWER(username), password_hash, mobile_number, LOWER(email), created_at) " + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
             try (Connection conn = DriverManager.getConnection(DB_URL , DB_USERNAME , DB_PASSWORD)) {
 
@@ -159,6 +152,36 @@ public class DataBase {
             }
         }
 
+    }
+
+    public int featchId(String userData){
+        Profile profile = new Profile();
+
+        String query="";
+        if(profile.isAvailable("username", userData)){
+                query = "SELECT user_id FROM users WHERE username = ?";
+        } else if (profile.isAvailable("email", userData)) {
+                 query = "SELECT user_id FROM users WHERE email = ?";
+        }else{
+             query = "SELECT user_id FROM users WHERE mobile_number  = ?";
+        }
+
+        try (Connection con= DriverManager.getConnection(DB_URL , DB_USERNAME , DB_PASSWORD)) {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, userData);
+            ResultSet rs = statement.executeQuery();
+            if(rs.next()){
+                return rs.getInt("user_id");
+            }else {
+                return -1;
+            }
+
+        }catch (SQLException e) {
+            System.err.println("Error occurred while registering user: " + e.getMessage());
+            e.printStackTrace(); // Optional: useful during debugging
+
+        }
+        return -1;
     }
 
     // fetch User_details byUser_id
