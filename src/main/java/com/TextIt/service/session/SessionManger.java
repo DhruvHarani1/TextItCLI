@@ -1,6 +1,11 @@
 package com.TextIt.service.session;
 
+import com.TextIt.database.DataBase;
+import com.TextIt.service.user.UserData;
+
 import java.io.*;
+
+import static com.TextIt.model.utils.CommonMethods.openInNewCMD;
 
 
 /**
@@ -9,19 +14,29 @@ import java.io.*;
  */
 public class SessionManger {
 
-
+    private  UserData userData ;
+    private DataBase dataBase = new DataBase();
     // It will Load During SignUP
     public SessionManger() {
-
-
     }
 
-   static public void autoLogin(){
+    public void autoLogin(){
         File file = new File("last_session.txt");
         if (file.exists()) {
             // Do auto Login()
-        } else {
-            // Do Nothing.
+            FileReader fr = null;
+            try {
+                fr = new FileReader(file);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found");
+            }
+            try(BufferedReader br = new BufferedReader(fr)){
+                userData = dataBase.getUserData(Integer.parseInt(br.readLine()));
+                openInNewCMD("com.TextIt.UI.LoginPage");
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+
         }
     }
 
