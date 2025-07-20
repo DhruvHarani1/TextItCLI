@@ -4,7 +4,6 @@ import com.TextIt.database.DataBase;
 import com.TextIt.model.utils.CommonMethods;
 import com.TextIt.service.pages.LoginAuth;
 import com.TextIt.service.pages.SignUpAuth;
-import com.TextIt.service.session.SessionManger;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -83,7 +82,6 @@ public class AuthCLI {
     public void showWelcomeScreen() throws SQLException {
 
         while (true) {
-            SessionManger.autoLogin();
             System.out.println(CommonMethods.CYAN + CommonMethods.BOLD + """
                     ╔════════════════════════════════════════╗
                     ║           Welcome to TextIt            ║
