@@ -39,6 +39,7 @@ public class LoginAuth implements Authentication {
      * @return true, if one out of three conditions satisfies else, it returns false
      */
     public boolean verifyUserDetail(String input){
+        input=input.trim().toLowerCase();
 
         try {
             if (profile.isAvailable("username", input)) {
