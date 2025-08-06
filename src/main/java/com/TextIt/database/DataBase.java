@@ -1,5 +1,6 @@
 package com.TextIt.database;
 
+import com.TextIt.model.exceptions.UserDetailNotMatchException;
 import com.TextIt.security.Hashing;
 import com.TextIt.service.user.UserData;
 
@@ -173,7 +174,8 @@ public class DataBase {
             if(rs.next()){
                 return rs.getInt("user_id");
             }else {
-                return -1;
+                throw new  UserDetailNotMatchException("No DataFound about the User" );
+
             }
 
         }catch (SQLException e) {
