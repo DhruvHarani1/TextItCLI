@@ -4,6 +4,11 @@ import com.TextIt.database.DataBase;
 import com.TextIt.service.user.UserData;
 
 import java.io.*;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import static com.TextIt.model.utils.CommonMethods.openInNewCMD;
 
@@ -32,6 +37,30 @@ public class SessionManger {
             }
             try(BufferedReader br = new BufferedReader(fr)){
                 userData = dataBase.getUserData(Integer.parseInt(br.readLine()));
+
+
+                    // Formater for the Date
+                    DateTimeFormatter dateformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    DateTimeFormatter timeformatter = DateTimeFormatter.ofPattern("HH:mm:ss.n");
+                    // fetch Date used in file
+                    LocalDate date = LocalDate.parse(br.readLine(), dateformatter);
+                    // fetch Today Date
+                    LocalDate currentDate = LocalDate.now();
+
+                    if(date.isBefore(currentDate)){
+                        return  false;
+                    }
+                    // Fetch Time from File
+                    LocalTime time = LocalTime.parse(br.readLine(), timeformatter);
+                    // Fetch CurrentTime
+                    LocalTime currentTime = LocalTime.now();
+                    // Difference between time and currentTime Object
+                    Duration duration = Duration.between(time, currentTime);
+                    // The Session will Last 30 min and Then you have to Login again
+                    if(duration.toMinutes() > 30) {
+                        return false;
+                    }
+
                 return true;
             }catch (Exception e){
                 System.out.println(e.getMessage());
@@ -48,7 +77,13 @@ public class SessionManger {
             File file = new File("last_session.txt");
             if(file.createNewFile()){
                 BufferedWriter bw = new BufferedWriter(new FileWriter("last_session.txt"));
+                LocalDate localDate = LocalDate.now();
+                LocalTime localTime = LocalTime.now();
                 bw.write(String.valueOf(user_id));
+                bw.newLine();
+                bw.write(String.valueOf(localDate));
+                bw.newLine();
+                bw.write(String.valueOf(localTime));
                 bw.flush();
                 bw.close();
             }else{
@@ -58,5 +93,9 @@ public class SessionManger {
             System.out.println("Error writing to file(last_session.txt) " + e.getMessage());
         }
 
+    }
+    public boolean checkSessionValidity(Date time ) {
+        File file = new File("last_session.txt");
+        return false;
     }
 }
