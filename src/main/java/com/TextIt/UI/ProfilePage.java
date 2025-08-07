@@ -10,9 +10,12 @@ import static com.TextIt.model.utils.CommonMethods.*;
 
 public class ProfilePage {
 
+
     static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+
+        dynamicDesign();
         //String username = String.valueOf(args[0]);
         String username = "TextIt";
         System.out.println(CYAN + BOLD);
@@ -126,13 +129,13 @@ public class ProfilePage {
         System.out.println();
 
         System.out.println(bodyLeftRightBorder + userData.getRealName() + " ".repeat(bodyContentLength - userData.getRealName().length() - userData.getUserName().length()) + userData.getUserName() + bodyLeftRightBorder);
-        // System.out.println(bodyLeftRightBorder + userData.getGender() + " ".repeat(bodyContentLength- userData.getGender().length() - userData.getLocation().length())+ bodyLeftRightBorder);
+        System.out.println(bodyLeftRightBorder + userData.getGender() + " ".repeat(bodyContentLength- userData.getGender().length() - userData.getLocation().length())+ bodyLeftRightBorder);
         System.out.println(bodyLeftRightBorder + "BIO -->" + " ".repeat(bodyContentLength - 7) + bodyLeftRightBorder);
-        // CommonMethods.paragraphDisplay(userData.getBio(),bodyLeftRightBorder,borderLength);
-        //System.out.println(bodyLeftRightBorder + "Member Since: " + userData.getSince() + " ".repeat(bodyContentLength-userData.getSince().length()-14) + bodyLeftRightBorder);
-        //System.out.println(bodyLeftRightBorder + "Posts: " + userData.getPostCount() + " ".repeat((bodyContentLength-userData.getPostCount().length()-userData.getFollowingCount().length()-userData.getFollowersCount().lenght()-29)/3) + "Following: " + userData.getFollowingCount() + " ".repeat((bodyContentLength-userData.getPostCount().length()-userData.getFollowingCount().length()-userData.getFollowersCount().lenght()-29)/3)  + "Followers: " + userData.getrFollowersCount() + " ".repeat((bodyContentLength-userData.getPostCount().length()-userData.getFollowingCount().length()-userData.getFollowersCount().lenght()-29)/3)  + bodyLeftRightBorder );
-        //System.out.println(bodyLeftRightBorder + "XP: " + userData.getXP()  + " ".repeat((bodyContentLength-userData.getXP().length() - userData.getLevel().length() -11)/3) + "Level: " + userData.getLevel() + " ".repeat((bodyContentLength-userData.getXP().length() - userData.getLevel().length() -11)/3) + bodyLeftRightBorder);
-        //System.out.println(bodyLeftRightBorder + "Mood: " + userData.getCurrentMood() + " ".repeat(bodyContentLength-userData.getCurrentMood().length()-6) + bodyLeftRightBorder);
+        CommonMethods.paragraphDisplay(userData.getBio(),bodyLeftRightBorder,borderLength);
+        System.out.println(bodyLeftRightBorder + "Member Since: " + userData.getMemberSince() + " ".repeat(bodyContentLength-userData.getMemberSince()-14) + bodyLeftRightBorder);
+        System.out.println(bodyLeftRightBorder + "Posts: " + userData.getPostCount() + " ".repeat((bodyContentLength-userData.getPostCount()-userData.getFollowingCount()-userData.getFollowersCount()-29)/3) + "Following: " + userData.getFollowingCount() + " ".repeat((bodyContentLength-userData.getPostCount()-userData.getFollowingCount()-userData.getFollowersCount()-29)/3)  + "Followers: " + userData.getFollowersCount() + " ".repeat((bodyContentLength-userData.getPostCount()-userData.getFollowingCount()-userData.getFollowersCount()-29)/3)  + bodyLeftRightBorder );
+        System.out.println(bodyLeftRightBorder + "XP: " + userData.getXP()  + " ".repeat((bodyContentLength-userData.getXP() - userData.getLevel() -11)/3) + "Level: " + userData.getLevel() + " ".repeat((bodyContentLength-userData.getXP() - userData.getLevel() -11)/3) + bodyLeftRightBorder);
+        System.out.println(bodyLeftRightBorder + "Share: " + userData.getUserShareCode() + " ".repeat(bodyContentLength-userData.getUserShareCode().length()-6) + bodyLeftRightBorder);
 
         System.out.println();
 
@@ -141,6 +144,5 @@ public class ProfilePage {
         System.out.println("[1] View Posts  [2] Edit Profile  [3] My Circles");
         System.out.println("[4] Settings    [5] Privacy Mode  [6] Exit      ");
         System.out.println("-".repeat(borderLength));
-        System.out.println(color("Tip: Type 'mood' to update your feeling!", GREEN));
     }
 }
